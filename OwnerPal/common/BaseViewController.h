@@ -20,10 +20,11 @@
 #import "LK_NSDictionary2Object.h"
 #import "DeliveryCompanyInfo.h"
 #import "ReceiverInfo.h"
-#import "MJRefresh.h"
 #import "DeliveryCompanyAllInfo.h"
 
 #define NUMBERS @"0123456789.\n"
+#define DEVICE_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define DEVICE_HEIGHT ( [UIScreen mainScreen].bounds.size.height)
 
 @interface BaseViewController : UIViewController<UITextFieldDelegate>
 @end

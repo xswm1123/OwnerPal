@@ -11,5 +11,6 @@
 @interface DeliveryCompanysTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *companyName;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumber;
-
+@property (weak, nonatomic) IBOutlet UILabel *address;
+@property(nonatomic,strong) NSString* key;
 @end

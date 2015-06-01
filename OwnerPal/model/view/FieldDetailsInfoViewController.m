@@ -27,8 +27,6 @@
     self.tf_address.text=self.commenBean.shdz;
     self.tf_goodName.text=self.commenBean.hw;
     self.tf_summary.text=self.commenBean.summary;
-    self.tf_goodVolum.text=self.commenBean.tj;
-    self.tf_goodWeight.text=self.commenBean.zl;
 }
 - (IBAction)selectReceiverAction:(id)sender {
     [self performSegueWithIdentifier:@"selectPeople" sender:nil];
@@ -40,8 +38,6 @@
     bean.shdh=self.tf_phoneNumber.text;
     bean.shdz=self.tf_address.text;
     bean.hw=self.tf_goodName.text;
-    bean.zl=self.tf_goodWeight.text;
-    bean.tj=self.tf_goodVolum.text;
     bean.summary=self.tf_summary.text;
     self.orderBean=bean;
 //    if (self.tf_receiveName.text.length==0&&self.tf_phoneNumber.text.length==0&&self.tf_address.text.length==0&&self.tf_goodName.text.length==0&&self.tf_goodVolum.text.length==0&&self.tf_goodWeight.text.length==0&&self.tf_summary.text.length==0) {
@@ -71,9 +67,6 @@
     [self.delegate getDetailsInfoOrderBean:self.orderBean];
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
-}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"selectPeople"]) {
         SelectPeopleListViewController* vc=segue.destinationViewController;
@@ -93,32 +86,52 @@
         return NO;
     }
     
-    NSCharacterSet *cs;
-    if(textField == self.tf_goodWeight)
-    {
-        cs = [[NSCharacterSet characterSetWithCharactersInString:NUMBERS] invertedSet];
-        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-        BOOL basicTest = [string isEqualToString:filtered];
-        if(!basicTest)
-        {
-            [MBProgressHUD showError:@"请输入数字!" toView:self.view.window];
-            return NO;
-        }
-    }
-    if(textField == self.tf_goodVolum)
-    {
-        cs = [[NSCharacterSet characterSetWithCharactersInString:NUMBERS] invertedSet];
-        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-        BOOL basicTest = [string isEqualToString:filtered];
-        if(!basicTest)
-        {
-            [MBProgressHUD showError:@"请输入数字!" toView:self.view.window];
-            return NO;
-        }
-    }
-
+   
     
     return YES;
+}
+/**
+ *  监视键盘，动画改变输入框的frame
+ */
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(keyboardAppear:) name:UIKeyboardWillShowNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardDisappear:) name:UIKeyboardWillHideNotification object:nil];
+}
+- (void)keyboardAppear:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    CGRect keyboardFrame = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect frame;
+    CGFloat distance;
+    CGFloat yLocation=0;
+    if ([self.tf_summary isFirstResponder]) {
+        if (keyboardFrame.origin.y<self.tf_summary.frame.origin.y+self.tf_summary.frame.size.height) {
+            distance=self.tf_summary.frame.origin.y+self.tf_summary.frame.size.height-keyboardFrame.origin.y;
+            yLocation=self.view.frame.origin.y-distance;
+        }
+        frame=CGRectMake(0, yLocation, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+        NSTimeInterval duration = [userInfo[UIKeyboardAnimationDurationUserInfoKey]doubleValue];
+        UIViewAnimationOptions options = [userInfo[UIKeyboardAnimationCurveUserInfoKey]unsignedIntegerValue];
+        [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
+            self.view.frame=frame;
+        } completion:^(BOOL bl){
+        }];
+
+    }
+   }
+- (void)keyboardDisappear:(NSNotification *)notification
+{
+    CGRect frame = self.view.frame;
+    frame.origin.y = self.view.bounds.size.height - frame.size.height - self.bottomLayoutGuide.length;
+    NSDictionary *userInfo = notification.userInfo;
+    NSTimeInterval duration = [userInfo[UIKeyboardAnimationDurationUserInfoKey]doubleValue];
+    UIViewAnimationOptions options = [userInfo[UIKeyboardAnimationCurveUserInfoKey]unsignedIntegerValue];
+    [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
+        self.view.frame = frame;
+    } completion:nil];
 }
 
 @end

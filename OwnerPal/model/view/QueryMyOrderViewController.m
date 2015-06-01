@@ -10,7 +10,6 @@
 #import "OrderDetailsTableViewCell.h"
 
 @interface QueryMyOrderViewController ()<UITableViewDataSource,UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UITextField *tf_queryOption;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(nonatomic,strong) NSMutableArray* orders;
 @property(nonatomic,strong) NSMutableArray* baseDataArr;
@@ -31,6 +30,7 @@
     
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+ 
 }
 -(void)viewDidAppear:(BOOL)animated{
     [self loadData];
@@ -74,7 +74,6 @@
     }else{
         request.billId=@"0";
     }
-//    request.employeeTel=@"13995089065";
     [SystemAPI QueryDeliveryCodeRequest:request success:^(QueryDeliveryCodeResponse *response) {
         NSMutableDictionary* dic=response.body;
         NSArray* lists=[dic objectForKey:@"list"];
@@ -96,7 +95,6 @@
     self.orders=[NSMutableArray array];
     QueryDeliveryCodeRequest* request=[[QueryDeliveryCodeRequest alloc]init];
     request.billId=@"0";
-//    request.employeeTel=@"13995089065";
     [SystemAPI QueryDeliveryCodeRequest:request success:^(QueryDeliveryCodeResponse *response) {
         NSMutableDictionary* dic=response.body;
         NSArray* lists=[dic objectForKey:@"list"];

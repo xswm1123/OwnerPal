@@ -22,4 +22,6 @@
 @property(nonatomic,strong) NSString* zl;
 @property(nonatomic,strong) NSString* tj;
 @property(nonatomic,strong) NSString* qyid;
+@property(nonatomic,strong) NSString* shbj;
+@property(nonatomic,strong) NSString* ddn;
 @end

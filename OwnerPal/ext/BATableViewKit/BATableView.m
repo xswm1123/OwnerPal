@@ -9,12 +9,14 @@
 #import "BATableView.h"
 #import "BATableViewIndex.h"
 
+
 @interface BATableView()<BATableViewIndexDelegate>
 @property (nonatomic, strong) UILabel * flotageLabel;
 @property (nonatomic, strong) BATableViewIndex * tableViewIndex;
 @end
 
 #define RGB(r,g,b,a)  [UIColor colorWithRed:(double)r/255.0f green:(double)g/255.0f blue:(double)b/255.0f alpha:a]
+#define DEVICE_WIDTH ([UIScreen mainScreen].bounds.size.width)
 
 @implementation BATableView
 
@@ -27,8 +29,10 @@
         self.tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
         self.tableView.showsVerticalScrollIndicator = NO;
         [self addSubview:self.tableView];
-        
-        self.tableViewIndex = [[BATableViewIndex alloc] initWithFrame:CGRectMake(300, 0, 20, self.tableViewIndex.bounds.size.height)];
+        /**
+         frame for tableViewIndex
+         */
+        self.tableViewIndex = [[BATableViewIndex alloc] initWithFrame:CGRectMake(DEVICE_WIDTH-20, 20, 20, self.tableViewIndex.bounds.size.height)];
         [self addSubview:self.tableViewIndex];
         
         self.flotageLabel = [[UILabel alloc] initWithFrame:(CGRect){(self.bounds.size.width - 64 ) / 2,(self.bounds.size.height - 64) / 2,64,64}];
@@ -79,13 +83,15 @@
                                       animated:NO];
         self.flotageLabel.text = title;
     }
-//    tableViewIndex.backgroundColor=[UIColor blackColor];
+    /**
+     *  change the color of  tableViewIndex's layer,you can also change the foreground color and backgroud color;The default  color  is black .
+     */
     NSArray* layers=   tableViewIndex.layer.sublayers;
     for (CALayer* la in layers) {
-//        la.backgroundColor=[[UIColor clearColor]CGColor];
+
         if (![la  isKindOfClass:[CAShapeLayer class]]) {
             CATextLayer* tl=(CATextLayer*)la;
-//            tl.foregroundColor=[[UIColor grayColor]CGColor];
+
             tl.foregroundColor=RGB(168, 168, 168, 1).CGColor;
         }
         

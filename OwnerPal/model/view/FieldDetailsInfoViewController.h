@@ -21,8 +21,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *tf_phoneNumber;
 @property (weak, nonatomic) IBOutlet UITextField *tf_address;
 @property (weak, nonatomic) IBOutlet UITextField *tf_goodName;
-@property (weak, nonatomic) IBOutlet UITextField *tf_goodWeight;
-@property (weak, nonatomic) IBOutlet UITextField *tf_goodVolum;
 @property (weak, nonatomic) IBOutlet UITextField *tf_summary;
 @property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
 @property(nonatomic,weak) id<DetailsInfoDelegate>delegate;

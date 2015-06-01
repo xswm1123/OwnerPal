@@ -27,4 +27,5 @@
 @property (nonatomic,strong) NSString * employeeName; //姓名
 @property (nonatomic,strong) NSString  * employeeTel;//电话
 @property (nonatomic,strong) NSString * mark;//物流公司标识
+@property(nonatomic,strong) NSString* isNeedToUpdateComs;//是否需要更新承运单位,1、需要更新，0、不需要更新
 @end

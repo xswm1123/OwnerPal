@@ -18,6 +18,8 @@
     [super viewDidLoad];
     NSLog(@"baseInfo:%@",self.baseInfo);
     [self loadData];
+    self.tableView.allowsSelection=NO;
+    self.tableView.allowsMultipleSelection=NO;
     // Do any additional setup after loading the view.
 }
 -(void)loadData{

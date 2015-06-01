@@ -7,6 +7,7 @@
 //
 
 #import "BaseTabBarController.h"
+#import "UIImage+UIImageExtras.h"
 
 @interface BaseTabBarController ()
 
@@ -16,14 +17,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 49)];
-    backView.backgroundColor = [UIColor whiteColor];
-    [self.tabBar insertSubview:backView atIndex:0];
-//    [self.tabBar insertSubview:backView atIndex:1000000];
-    self.tabBar.opaque = YES;
-//   self.tabBar.backgroundColor=[UIColor colorWithRed:79/255.0 green:95/255.0 blue:112/255.0 alpha:1.0];
-    self.tabBar.backgroundImage=[UIImage imageNamed:@"colorCircle.png"];
-    self.tabBar.selectionIndicatorImage=[UIImage imageNamed:@"test.png"];
+    UIImage* image=[UIImage imageNamed:@"tab_sbg.png"];
+    CGSize imagesize=CGSizeMake(120, 49.0);
+    self.tabBar.selectionIndicatorImage=[image imageByScalingToSize:imagesize];
+    /**
+     *  rebuild the tabbar frame
+     */
+    CGRect frame = self.tabBar.frame;
+    frame.origin.x = -6;
+    frame.size.width = frame.size.width+12;
+    self.tabBar.frame = frame;
     
 }
 

@@ -15,9 +15,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *receive_phoneNum;
 @property (weak, nonatomic) IBOutlet UILabel *receive_address;
 @property (weak, nonatomic) IBOutlet UILabel *good_name;
-@property (weak, nonatomic) IBOutlet UILabel *good_weight;
-@property (weak, nonatomic) IBOutlet UILabel *good_Volume;
 @property (weak, nonatomic) IBOutlet UILabel *good_summary;
-@property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
+@property (weak, nonatomic) IBOutlet UITextField *arrivedPoint;
+@property (weak, nonatomic) IBOutlet UITextField *tf_goodWeight;
+@property (weak, nonatomic) IBOutlet UITextField *tf_goodVolum;
+@property (weak, nonatomic) IBOutlet UITextField *receiverCode;
 
 @end

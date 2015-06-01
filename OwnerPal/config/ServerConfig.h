@@ -14,14 +14,16 @@
 #define DEFINE_DESCRIPTION @"000051"
 // 根路径
 //测试环境
-//地址1
-//#define BASE_SERVERLURL @"http://www.tangusoft.com/"
+//地址1 www.tangusoft.com/t5
+#define BASE_SERVERLURL @"http://www.tangusoft.com/"
 //地址2
-#define BASE_SERVERLURL @"http://112.124.46.15/"
+//#define BASE_SERVERLURL @"http://112.124.46.15/"
+//地址3 http://121.40.174.204/t5
+//#define BASE_SERVERLURL @"http://121.40.174.204/"
 
 
 //// 图片上传路径
-#define UPLOAD_PIC_URL @"http://202.101.116.77:8082/xsgj_up/"
+#define UPLOAD_PIC_URL @""
 
 
 

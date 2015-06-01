@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import "QueryOrderDetailsViewController.h"
+#import "MJRefresh.h"
 
 @interface QueryMyOrderViewController : BaseViewController
 

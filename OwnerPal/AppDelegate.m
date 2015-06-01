@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "shareValue.h"
+#import "SystemAPI.h"
+#import "SystemHttpRequest.h"
+#import "SystemHttpResponse.h"
 
 @interface AppDelegate ()
 
@@ -17,12 +21,30 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    /**
+     *  开启子线程去获取是否需要更新承运单位
+     */
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self requestCompanysUpdateState];
+    });
     UIStoryboard* storyBoard=[UIStoryboard storyboardWithName:@"Login" bundle:nil];
     self.window.rootViewController=[storyBoard instantiateInitialViewController];
      [self.window makeKeyAndVisible];
     return YES;
 }
-
+/**
+ *  请求服务器，是否需要更新当前的承运单位
+ */
+-(void)requestCompanysUpdateState{
+    GetDeliveryCompanyRequest* request=[[GetDeliveryCompanyRequest alloc]init];
+    [SystemAPI GetDeliveryCompanyRequest:request success:^(GetDeliveryCompanyResponse *response) {
+        [shareValue shareInstance].isNeedToUpdateComs=@"1";
+        NSLog(@"isNeedToUpdateComs:%@", [shareValue shareInstance].isNeedToUpdateComs);
+    } fail:^(BOOL notReachable, NSString *desciption) {
+        [shareValue shareInstance].isNeedToUpdateComs=@"0";
+        NSLog(@"isNeedToUpdateComs:%@", [shareValue shareInstance].isNeedToUpdateComs);
+    }];
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     
 }
@@ -32,11 +54,17 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    
+    /**
+     *  开启子线程去获取是否需要更新承运单位
+     */
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self requestCompanysUpdateState];
+    });
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

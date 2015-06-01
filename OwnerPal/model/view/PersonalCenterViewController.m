@@ -7,22 +7,23 @@
 //
 
 #import "PersonalCenterViewController.h"
+#import "LoginViewController.h"
 
-@interface PersonalCenterViewController ()<UITextFieldDelegate>
+@interface PersonalCenterViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *saveBtn;
+@property (weak, nonatomic) IBOutlet UIButton *logoutBtn;
 
 @end
 
 @implementation PersonalCenterViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.saveBtn.layer.cornerRadius=8;
+    self.saveBtn.layer.cornerRadius=8.0;
+    self.logoutBtn.layer.cornerRadius=8.0;
     self.lb_phoneNumber.text=[shareValue shareInstance].employeeTel;
     self.tf_company.text=[shareValue shareInstance].employeeCompany;
     self.tf_name.text=[shareValue shareInstance].employeeName;
     self.tf_address.text=[shareValue shareInstance].employeeAddress;
-    // Do any additional setup after loading the view.
 }
 #pragma UITextField_Delegate
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
@@ -51,6 +52,11 @@
         reqeust.para=jsonString;
         [SystemAPI SavePersonInfosRequest:reqeust uccess:^(SavePersonInfosResponse *response) {
             self.saveBtn.enabled=YES;
+            [shareValue shareInstance].employeeTel=self.lb_phoneNumber.text;
+            [shareValue shareInstance].employeeCompany=self.tf_company.text;
+            [shareValue shareInstance].employeeName= self.tf_name.text;
+            [shareValue shareInstance].employeeAddress=self.tf_address.text;
+            
             [MBProgressHUD hideAllHUDsForView:self.view.window animated:YES];
             [MBProgressHUD showSuccess:response.msg toView:self.view.window];
         } fail:^(BOOL notReachable, NSString *desciption) {
@@ -75,5 +81,20 @@
         return NO;
     }
     return YES;
+}
+- (IBAction)logoutAction:(id)sender {
+    UIAlertView* al=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否确定注销当前用户？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [al show];
+    
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==1) {
+        UIStoryboard* sb=[UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController* vc=[sb instantiateInitialViewController];
+        [self presentViewController:vc
+                           animated:YES completion:^{
+                               
+                           }];
+    }
 }
 @end

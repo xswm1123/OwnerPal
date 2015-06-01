@@ -12,7 +12,7 @@
 #define SET_EMPLOYEENAME @"SET_EMPLOYEENAME"
 #define SET_EMPLOYEETEL @"SET_EMPLOYEETEL"
 #define SET_MARK @"SET_MARK"
-
+#define SET_ISNEEDTOUPDATECOMS @"SET_ISNEEDTOUPDATECOMS"
 
 
 static shareValue *_shareValue;
@@ -79,5 +79,16 @@ static shareValue *_shareValue;
 }
 -(NSString *)mark{
     return [[NSUserDefaults standardUserDefaults]stringForKey:SET_MARK];
+}
+-(void)setIsNeedToUpdateComs:(NSString*)isNeedToUpdateComs{
+    if (!isNeedToUpdateComs) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:SET_ISNEEDTOUPDATECOMS];
+    }else{
+        [[NSUserDefaults standardUserDefaults] setObject:isNeedToUpdateComs forKey:SET_ISNEEDTOUPDATECOMS];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+-(NSString *)isNeedToUpdateComs{
+    return [[NSUserDefaults standardUserDefaults]stringForKey:SET_ISNEEDTOUPDATECOMS];
 }
 @end

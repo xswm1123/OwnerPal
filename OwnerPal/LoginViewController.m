@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "shareValue.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *phoneView;
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *checkBtn;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @property(nonatomic,strong) NSTimer * timer;
+@property (weak, nonatomic) IBOutlet UIView *checkTfView;
 
 @end
 static NSUInteger count=60;
@@ -26,17 +28,15 @@ static NSUInteger count=60;
     [self initView];
 }
 -(void)initView{
-    self.checkView.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:0.0];
+    self.phoneView.layer.borderColor=[UIColor whiteColor].CGColor;
+    self.phoneView.layer.borderWidth=2.0;
     self.checkBtn.titleLabel.text=@"短信验证";
     [self.checkBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-    
-//    self.tf_checkNumber.delegate=self;
-//    self.tf_phoneNumber.delegate=self;
     self.checkBtn.layer.cornerRadius=3;
     self.loginBtn.layer.cornerRadius=3;
-    self.tf_checkNumber.layer.borderColor=[UIColor whiteColor].CGColor;
-    self.tf_checkNumber.layer.borderWidth=1.5;
-    self.tf_checkNumber.backgroundColor=[UIColor whiteColor];
+    self.checkTfView.layer.borderColor=[UIColor whiteColor].CGColor;
+    self.checkTfView.layer.borderWidth=2.0;
+    self.tf_phoneNumber.text=[shareValue shareInstance].employeeTel;
 }
 - (IBAction)dismissKeyBoard:(id)sender {
     [self.tf_checkNumber resignFirstResponder];
@@ -49,9 +49,9 @@ static NSUInteger count=60;
         [textField resignFirstResponder];
         return NO;
     }
-    if (textField.text.length>=6&&textField==self.tf_checkNumber) {
-        return NO;
-    }
+//    if (textField.text.length>=6&&textField==self.tf_checkNumber) {
+//        return NO;
+//    }
     
     return YES;
 }

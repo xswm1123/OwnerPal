@@ -12,4 +12,6 @@
 @property(nonatomic,strong) NSString * name;
 @property(nonatomic,strong) NSString * phoneNumber;
 @property(nonatomic,strong) NSString * py;
+@property(nonatomic,strong) NSString* key;
+@property(nonatomic,strong) NSString* address;
 @end

@@ -94,9 +94,5 @@
  */
 @interface SavePersonInfosRequest : LK_HttpBaseRequest
 @property(nonatomic,strong) NSString* type;
-//@property(nonatomic,strong) NSString* employeeCompany;
-//@property(nonatomic,strong) NSString* employeeName;
-//@property(nonatomic,strong) NSString* employeeTel;
-//@property(nonatomic,strong) NSString* employeeAddress;
 @property(nonatomic,strong) NSString * para;
 @end
